@@ -1,6 +1,98 @@
 <!DOCTYPE html>
 <html lang="en">
 
+<!-- inicio anuncio flotante antes de head-->
+
+<style type='text/css'>
+  #anuncio {
+  position: absolute;
+  border: 0px;
+  padding: 2px;
+  width: 300px;
+  height: 80px;
+  visibility: hidden;
+  z-index: 200;
+  top: 27px;
+  left: 13px;
+  }
+  </style>
+  <script type='text/javascript'>
+    //<![CDATA[
+    var persistclose=0 //set to 0 or 1. 1 means once the bar is manually closed, it will remain closed for browser session
+    var startX = 30 //set x offset of bar in pixels
+    var startY = 5 //set y offset of bar in pixels
+    var verticalpos="fromtop" //enter "fromtop" or "frombottom"
+    
+    function iecompattest(){
+    return (document.compatMode && document.compatMode!="BackCompat")? document.documentElement : document.body
+    }
+    
+    function get_cookie(Name) {
+    var search = Name + "="
+    var returnvalue = "";
+    if (document.cookie.length > 0) {
+    offset = document.cookie.indexOf(search)
+    if (offset != -1) {
+    offset += search.length
+    end = document.cookie.indexOf(";", offset);
+    if (end == -1) end = document.cookie.length;
+    returnvalue=unescape(document.cookie.substring(offset, end))
+    }
+    }
+    return returnvalue;
+    }
+    
+    function closebar(){
+    if (persistclose)
+    document.cookie="remainclosed=1"
+    document.getElementById("anuncio").style.visibility="hidden"
+    }
+    
+    function staticbar(){
+    barheight=document.getElementById("anuncio").offsetHeight
+    var ns = (navigator.appName.indexOf("Netscape") != -1) || window.opera;
+    var d = document;
+    function ml(id){
+    var el=d.getElementById(id);
+    if (!persistclose || persistclose && get_cookie("remainclosed")=="")
+    el.style.visibility="visible"
+    if(d.layers)el.style=el;
+    el.sP=function(x,y){this.style.left=x+"px";this.style.top=y+"px";};
+    el.x = startX;
+    if (verticalpos=="fromtop")
+    el.y = startY;
+    else{
+    el.y = ns ? pageYOffset + innerHeight : iecompattest().scrollTop + iecompattest().clientHeight;
+    el.y -= startY;
+    }
+    return el;
+    }
+    window.stayTopLeft=function(){
+    if (verticalpos=="fromtop"){
+    var pY = ns ? pageYOffset : iecompattest().scrollTop;
+    ftlObj.y += (pY + startY - ftlObj.y)/8;
+    }
+    else{
+    var pY = ns ? pageYOffset + innerHeight - barheight: iecompattest().scrollTop + iecompattest().clientHeight - barheight;
+    ftlObj.y += (pY - startY - ftlObj.y)/8;
+    }
+    ftlObj.sP(ftlObj.x, ftlObj.y);
+    setTimeout("stayTopLeft()", 10);
+    }
+    ftlObj = ml("anuncio");
+    stayTopLeft();
+    }
+    if (window.addEventListener)
+    window.addEventListener("load", staticbar, false)
+    else if (window.attachEvent)
+    window.attachEvent("onload", staticbar)
+    else if (document.getElementById)
+    window.onload=staticbar
+    //]]>
+    </script>
+    <!-- fin anuncio flotante antes de head-->
+    
+
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -26,6 +118,12 @@
 
   
 </head>
+<!-- inicio anuncio flotante antes de body-->
+<div id='anuncio'>
+  <a href='Javascript:void' onClick='closebar(); return false'><img align='right' border='0' src='https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi5rm-QI1d5oAYDupaZoKAPiwkxdScePYtr5h7d6-DwFAP8UtJiifBNY6apK6tOHWvb_okSewThup6gH_jvQurBlwBRiL9vPRL2771GwAX1Uif_pMrn6wlgvZ-J1MGyMrg4M_9ssgEGxUY/s200/icono-cerrar.png'/></a><br />
+  <a href='#'><img src='img/publicidad_marzo.png'/></a>
+  </div>
+<!-- fin anuncio flotante antes de body-->
 
 <body>
   <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -53,6 +151,7 @@
       </div>
     </div>
   </nav>
+  
 
 
   <div class="container">
@@ -228,7 +327,7 @@
             </div>
             <p>Diseñada específicamente para vender productos y servicios.</p><br>
             <div class="ficon"><br>
-              <a href="blog4.html" class="btn btn-default_estandar" role="button">DESDE <br> <b>200 $</b> US</a>
+              <a href="blog4.html" class="btn btn-default_estandar" role="button">DESDE <br> <b>250 $</b> US</a>
             </div>
           </div>
         </div>
@@ -241,7 +340,7 @@
             </div>
             <p>Orientada al reconocimiento de marca y/o presentación de productos o servicios de tu empresa.</p><br>
             <div class="ficon">
-              <a href="blog3.html" class="btn btn-default_estandar" role="button">DESDE <br> <b>170 $</b> US</a>
+              <a href="blog3.html" class="btn btn-default_estandar" role="button">DESDE <br> <b>220 $</b> US</a>
             </div>
           </div>
         </div>
@@ -254,7 +353,7 @@
             </div>
             <p>Diseñada objetivamente para atraer leads y convertir tus contactos y prospectos. </p> <br>
             <div class="ficon">
-              <a href="blog5.html" class="btn btn-default_estandar" role="button">DESDE <br> <b>150 $</b> US</a>
+              <a href="blog5.html" class="btn btn-default_estandar" role="button">DESDE <br> <b>200 $</b> US</a>
             </div>
           </div>
 
